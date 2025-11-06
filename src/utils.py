@@ -1,6 +1,7 @@
 from __future__ import annotations
 import cv2 as cv
 import numpy as np
+import matplotlib.pyplot as plt
 from typing import Tuple
 
 def imread_color(path: str) -> np.ndarray:
@@ -24,3 +25,12 @@ def synthetic_affine_pair(img: np.ndarray, angle_deg: float = 10.0, tx: float = 
 
 def rmse(A: np.ndarray, B: np.ndarray) -> float:
     return float(np.sqrt(np.mean((A - B)**2)))
+
+def show_image(img, title="", scale=1):
+    if len(img.shape) == 3 and img.shape[2] == 3:
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+    plt.figure(figsize=(5 * scale, 5 * scale))
+    plt.title(title)
+    plt.imshow(img)
+    plt.axis("off")
+    plt.show()
