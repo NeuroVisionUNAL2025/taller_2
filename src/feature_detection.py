@@ -25,7 +25,7 @@ def detect_and_describe(image: np.ndarray, method: DetectorName = "SIFT") -> Tup
     if method == "SIFT":
         extractor = cv.SIFT_create()  # requiere opencv-contrib
     elif method == "ORB":
-        extractor = cv.ORB_create(nfeatures=3000, scoreType=cv.ORB_HARRIS_SCORE)
+        extractor = cv.ORB_create(nfeatures=5000, scoreType=cv.ORB_HARRIS_SCORE)
     elif method == "AKAZE":
         extractor = cv.AKAZE_create()
     else:
