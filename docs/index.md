@@ -5,14 +5,14 @@ Este trabajo es una práctica experimental en visión por computador y procesami
 Todas las imágenes usadas fueron tomadas directamente por el equipo con una cámara de teléfono celular, en distintas condiciones de iluminación y contexto. El procesamiento se desarrolló en Python utilizando librerías de código abierto (OpenCV, NumPy y Matplotlib), y se documentó paso a paso.
 
 ## Estructura del informe
-- [Introducción]
-- [Marco Teórico]
-- [Metodología]
-- [Experimentos y Resultados]
-- [Análisis y Discusión]
-- [Conclusiones]
-- [Referencias Bibliográficas]
-- [Análisis de contribución individual]
+- [Introducción](#introducción)
+- [Marco Teórico](#marco-teórico)
+- [Metodología](#metodología)
+- [Experimentos y Resultados](#experimentos-y-resultados)
+- [Análisis y Discusión](#análisis-y-discusión)
+- [Conclusiones](#conclusiones)
+- [Referencias Bibliográficas](#referencias-bibliográficas)
+- [Análisis de contribución individual](#análisis-de-contribución-individual)
 
 ## Introducción
 
