@@ -239,7 +239,7 @@ En conclusión, los resultados confirman que la calidad de la reconstrucción pa
 
 * A. Bousaid, T. Theodoridis, S. Nefti-Meziani and S. Davis, "Perspective Distortion Modeling for Image Measurements," in IEEE Access, vol. 8, pp. 15322-15331, 2020, doi: 10.1109/ACCESS.2020.2966716. Recuperado de: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8960275
 
-Alcantarilla, P. F., Nuevo, J., & Bartoli, A. (2013). Difusión explícita rápida para características aceleradas en espacios de escala no lineales [Fast explicit diffusion for accelerated features in nonlinear scale spaces]. En British Machine Vision Conference (BMVC 2013) (pp. 13.1–13.11). British Machine Vision Association. Recuperado de https://www.bmva-archive.org.uk/bmvc/2013/Papers/paper0013/paper0013.pdf 
+* Alcantarilla, P. F., Nuevo, J., & Bartoli, A. (2013). Difusión explícita rápida para características aceleradas en espacios de escala no lineales [Fast explicit diffusion for accelerated features in nonlinear scale spaces]. En British Machine Vision Conference (BMVC 2013) (pp. 13.1–13.11). British Machine Vision Association. Recuperado de https://www.bmva-archive.org.uk/bmvc/2013/Papers/paper0013/paper0013.pdf 
 
 ## Análisis de contribución individual
 
