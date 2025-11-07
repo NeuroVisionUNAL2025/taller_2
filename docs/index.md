@@ -31,7 +31,7 @@ Además de la implementación práctica, el ejercicio permitió comprender y apl
 Propuesto por Lowe (2004), puede detectar extremos coincidentes entre varias escenas con diferentes condiciones de ruido,  distorsión o iluminación, a través de Difference-of-Gaussian, la localización precisa de puntos clave, la asignación de orientación para la invarianza a la rotación, y la creación de un descriptor local altamente distintivo.
 
 ### 1.2. ORB (Oriented FAST and Rotated BRIEF)
-ORB fue desarrollado como una alternativa más eficiente computacionalmente. Rublee, R. et all (2011) explican que ORB combina el detector FAST para una orientación rápida y precisa de los puntos con un descriptor BRIEF orientado para una búsqueda eficiente de vecinos cercanos, proporcionando un método rápido, eficiente para aplicaciones en dispositivos menos robustos o en aplicaciones en tiempo real.
+ORB fue desarrollado como una alternativa más eficiente computacionalmente. Rublee, R. et al. (2011) explican que ORB combina el detector FAST para una orientación rápida y precisa de los puntos con un descriptor BRIEF orientado para una búsqueda eficiente de vecinos cercanos, proporcionando un método rápido, eficiente para aplicaciones en dispositivos menos robustos o en aplicaciones en tiempo real.
 
 ### 1.3. AKAZE (Accelerated KAZE)
 Propuesto por Alcantarilla et al. (2013), AKAZE es una versión optimizada del método KAZE, diseñada para detectar y describir puntos de interés en un espacio de escala no lineal. A diferencia de los enfoques basados en la escala gaussiana, AKAZE utiliza un esquema de difusión no lineal conocido como Fast Explicit Diffusion (FED), que permite preservar mejor los bordes y detalles de la imagen mientras reduce el ruido. Además, emplea el descriptor binario M-LDB (Modified Local Difference Binary), lo que mejora la eficiencia computacional sin comprometer significativamente la precisión. Gracias a estas características, AKAZE ofrece un buen equilibrio entre robustez, velocidad y calidad en tareas de emparejamiento y registro de imágenes.
@@ -184,7 +184,7 @@ Se fijó la escala a partir de una referencia medida en la escena (por ejemplo, 
 
 elemento | dist_cm | error_vs_ref_cm |
 --- | --- | ---
-VALIDACION_MESA | 155.99247397214026 | -5.107526027859734
+VALIDACION_MESA | 155.99247397214026 | 5.107526027859734
 Largo del banco azul | 167.76843585579888 | 
 Altura del lado interno del cuadro | 86.40405414080126 | 
 Largo del lado interno de la mesa | 132.46366917336135 | 
