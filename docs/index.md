@@ -34,6 +34,7 @@ Propuesto por Lowe (2004), puede detectar extremos coincidentes entre varias esc
 ORB fue desarrollado como una alternativa más eficiente computacionalmente. Rublee, R. et all (2011) explican que ORB combina el detector FAST para una orientación rápida y precisa de los puntos con un descriptor BRIEF orientado para una búsqueda eficiente de vecinos cercanos, proporcionando un método rápido, eficiente para aplicaciones en dispositivos menos robustos o en aplicaciones en tiempo real.
 
 ### 1.3. AKAZE (Accelerated KAZE)
+Propuesto por Alcantarilla et al. (2013), AKAZE es una versión optimizada del método KAZE, diseñada para detectar y describir puntos de interés en un espacio de escala no lineal. A diferencia de los enfoques basados en la escala gaussiana, AKAZE utiliza un esquema de difusión no lineal conocido como Fast Explicit Diffusion (FED), que permite preservar mejor los bordes y detalles de la imagen mientras reduce el ruido. Además, emplea el descriptor binario M-LDB (Modified Local Difference Binary), lo que mejora la eficiencia computacional sin comprometer significativamente la precisión. Gracias a estas características, AKAZE ofrece un buen equilibrio entre robustez, velocidad y calidad en tareas de emparejamiento y registro de imágenes.
 
 ### 1.4. RANSAC (Random Sample Consensus)
 Desarrollado por Fischler y Bolles (1981), RANSAC permite interpretar o suavizar datos que contienen un porcentaje significativo de errores, como los generados por los detectores de características, así, logra ajustar un modelo incluso con un gran número de datos iniciales con errores. El principio de RANSAC es utilizar el número mínimo de puntos necesarios para definir un modelo y, a partir de ese modelo, verificar si el resto de los datos son compatibles.
@@ -238,12 +239,14 @@ En conclusión, los resultados confirman que la calidad de la reconstrucción pa
 
 * A. Bousaid, T. Theodoridis, S. Nefti-Meziani and S. Davis, "Perspective Distortion Modeling for Image Measurements," in IEEE Access, vol. 8, pp. 15322-15331, 2020, doi: 10.1109/ACCESS.2020.2966716. Recuperado de: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8960275
 
+Alcantarilla, P. F., Nuevo, J., & Bartoli, A. (2013). Difusión explícita rápida para características aceleradas en espacios de escala no lineales [Fast explicit diffusion for accelerated features in nonlinear scale spaces]. En British Machine Vision Conference (BMVC 2013) (pp. 13.1–13.11). British Machine Vision Association. Recuperado de https://www.bmva-archive.org.uk/bmvc/2013/Papers/paper0013/paper0013.pdf 
+
 ## Análisis de contribución individual
 
 * Juan José: Desarrollo del notebook base para la validación de imágenes sintéticas, planteamiento de ideas para el análisis de resultados. 
 
 * Alexander: Desarrollo del notebook principal del pipeline, planteamiento de ideas para el análisis de resultados. Construcción del marco teórico.
 
-* Yuricik: Redacción del informe, experimentos y resultados, análisis de resultados y discusión, conclusiones.
+* Yuricik: Redacción del informe, experimentos y resultados, análisis de resultados y discusión, conclusiones. Construcción del marco teórico.
 
 * Thomas: Estructuración del repositorio, modularización de funciones, estandarización de notebooks, apoyo en la redacción del informe y carga a GitHub Pages.
