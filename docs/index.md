@@ -90,6 +90,12 @@ Permitir la interacción directa sobre la imagen facilita la calibración basada
 
 ## Experimentos y Resultados
 
+### 3.1 Validación con imágenes sintéticas
+
+Se generaron pares de imágenes artificiales con transformaciones geométricas conocidas (rotación, traslación y escala). El algoritmo fue capaz de recuperar correctamente las transformaciones, con los siguientes errores promedio en RMSE y diferencias angulares para SIFT, ORB y AKAZE.
+
+{% include csv_table.html data="synth_validation" cols="angle,tx,ty,scale,method,matches,inliers,rmse_H,angle_err_deg" limit=50 %}
+
 ## Análisis y Discusión
 
 ## Conclusiones
