@@ -17,8 +17,11 @@ Todas las imágenes usadas fueron tomadas directamente por el equipo con una cá
 ## Introducción
 
 El registro de imágenes es uno de los procesos fundamentales en visión por computador, ya que permite combinar múltiples vistas parciales de una escena para obtener una representación más completa y coherente. Este procedimiento tiene aplicaciones en robótica, fotogrametría, diagnóstico médico y reconstrucción tridimensional, entre otros.
+
 La extracción de características es un proceso esencial en este contexto, pues permite identificar y relacionar puntos distintivos entre diferentes vistas de una misma escena. Este proceso tiene aplicaciones en reconocimiento de objetos, recuperación de imágenes y alineamiento o registro entre vistas. Según Isik (2024), la extracción de características comprende tres etapas principales: detección, descripción y emparejamiento. La detección identifica puntos clave distintivos; la descripción convierte la vecindad de esos puntos en representaciones numéricas invariantes; y el emparejamiento busca correspondencias entre imágenes para permitir su alineación o registro.
+
 En este trabajo se desarrolló un pipeline para registrar y fusionar tres imágenes de un comedor, tomadas desde distintos ángulos. El objetivo fue crear un mosaico panorámico continuo y posteriormente calibrar la escala métrica de la escena para realizar mediciones reales sobre la imagen fusionada.
+
 Además de la implementación práctica, el ejercicio permitió comprender y aplicar los fundamentos teóricos de la detección de características, el emparejamiento robusto mediante RANSAC y las transformaciones geométricas mediante homografías, así como explorar una aplicación directa de la visión computacional en la obtención de medidas reales a partir de imágenes. 
 
 
@@ -47,7 +50,7 @@ Se cargan las tres imágenes (img1, img2, img3) tomadas desde diferentes posicio
 #### 2.1.2. Justificación
 La conversión a escala de grises reduce el procesamiento computacional y mejora la estabilidad de los detectores de características, ya que se basan en gradientes de intensidad.
 
-#### 2.1.3.Diagrama del proceso
+#### 2.1.3. Diagrama del proceso
 [Inicio] → [Leer imágenes] → [Convertir a gris] → [Salida: imágenes en escala de grises]
 
 ### 2.2. Módulo de detección de Keypoints y cálculo de descriptores
@@ -64,29 +67,29 @@ Se requiere probar distintos detectores dadas sus diversas propiedades: SIFT es 
 ### 2.3. Módulo de matching de descriptores
 
 #### 2.3.1. Descripción del pipeline
-Se utilizan los descriptores obtenidos para emparejar características entre imágenes con un BFMatcher (Brute Force Matcher) y se filtran mediante el test de razón de Lowe (ratio test). A continuación se calculan las coordenadas de los puntos emparejados y se aplica RANSAC para estimar una homografía robusta que relacione las imágenes y elimine outliers.
+Se utilizan los descriptores obtenidos para emparejar características entre imágenes con un BFMatcher (Brute Force) o FLANN, según el tipo de descriptor. Para SIFT/AKAZE (float) se emplea L2; para ORB (binario) se emplea Hamming. Se filtran con la regla de razón de Lowe (ratio test, típicamente 0.75). A continuación, se calculan las coordenadas de los puntos emparejados y se aplica RANSAC para estimar una homografía robusta que relacione las imágenes y elimine outliers.
 
 #### 2.3.2. Justificación
 El test de Lowe reduce los falsos positivos garantizando que los matches sean consistentes y fiables antes de estimar la transformación geométrica. Por su parte, RANSAC es un método iterativo que encuentra el mejor modelo ajustado a los datos válidos, evitando que los emparejamientos erróneos afecten el registro.
 
 #### 2.3.3. Diagrama del proceso
-[Entrada: descriptores] → [BFMatcher knnMatch] → [Filtrar con ratio test] → [Buenos matches] → [RANSAC iterativo] → [Homografía óptima H] → [Máscara de inliers]
+[Entrada: descriptores] → [BF/FLANN knnMatch] → [Filtrar con ratio test] → [Buenos matches] → [RANSAC (findHomography)] → [Homografía H] → [Máscara de inliers]
 
 ### 2.4. Módulo de construcción del lienzo panorámico y fusión
 
 #### 2.4.1. Descripción del pipeline
-Se calculan las dimensiones del lienzo de salida a partir de las esquinas transformadas de cada imagen, y se aplican las homografías para proyectarlas en un mismo plano. Finalmente, se combinan para formar una única vista coherente del comedor.
+Se calculan las dimensiones del lienzo de salida a partir de las esquinas transformadas de cada imagen y se aplica una traslación para garantizar coordenadas positivas. Cada homografía H_i mapea la imagen i al sistema de referencia de la imagen 0. Luego se proyectan con cv.warpPerspective y se combinan en un mismo plano.
 
 #### 2.4.2. Justificación
 La homografía permite transformar las imágenes en un sistema de referencia común, creando un mosaico que conserva las proporciones y relaciones espaciales reales.
 
 #### 2.4.3. Diagrama del proceso
-[Entrada: imágenes y homografías] → [Transformar esquinas] → [WarpPerspective] → [Combinar imágenes]
+[Entrada: imágenes y homografías] → [Transformar esquinas] → [Trasladar lienzo] → [cv.warpPerspective] → [Feather blending por distancia] → [Combinar imágenes]
 
 ### 2.5. Módulo de interfaz de calibración y medición
 
 #### 2.5.1. Descripción del pipeline
-Se muestra el mosaico final en una ventana ajustada a 1080 px de ancho. El usuario selecciona dos puntos para calibrar la escala en cm, y luego puede medir distancias con nuevos pares de clics.
+Se muestra el mosaico final en una ventana de OpenCV y el usuario selecciona dos puntos para fijar la escala (px/cm) y luego puede medir distancias con nuevos pares de clics. En el notebook base se ofrece, de forma opcional, un ajuste del ancho máximo a 1080 px para visualización; el notebook principal trabaja a resolución nativa. La interacción se implementa con interactive_pick_points y los cálculos con set_scale_by_two_points y measure_distance.
 
 #### 2.5.2. Justificación
 Permitir la interacción directa sobre la imagen facilita la calibración basada en objetos de referencia y la medición visual en unidades físicas reales.
@@ -176,9 +179,9 @@ El mosaico final obtenido muestra una fusión continua del comedor, con transici
 
 ### 3.4 Calibración y medición
 
-Con la altura del cuadro (117 cm) y el ancho de la mesa (161.1 cm). Se estimaron medidas con el siguiente resultado:
+Se fijó la escala a partir de una referencia medida en la escena (por ejemplo, el ancho de la mesa: 161.1 cm) y se estimaron medidas sobre el mosaico. La fila de validación reporta el error respecto a la referencia seleccionada.
 
-elemento | dist_cm | error_vs_161_1 |
+elemento | dist_cm | error_vs_ref_cm |
 --- | --- | ---
 VALIDACION_MESA | 155.99247397214026 | -5.107526027859734
 Largo del banco azul | 167.76843585579888 | 
@@ -218,7 +221,7 @@ Durante las pruebas, se notó que en regiones con colores o figuras muy similare
 El pipeline implementado logró fusionar tres vistas del comedor con una precisión aceptable y una calibración métrica válida, confirmando la eficacia de los métodos clásicos de registro en entornos reales.
 
 SIFT resultó el método más robusto, AKAZE equilibró precisión y eficiencia, y ORB demostró su utilidad para escenarios donde la velocidad es prioritaria.
-El error promedio en las mediciones métricas fue inferior al 3%, lo que valida la exactitud geométrica del sistema propuesto.
+El error promedio en las mediciones métricas fue cercano al 3% (≈3%), lo que sugiere una exactitud geométrica adecuada del sistema propuesto.
 
 En conclusión, los resultados confirman que la calidad de la reconstrucción panorámica no depende únicamente del número de puntos detectados, sino también de su distribución espacial, unicidad y robustez frente a la variación local del entorno. Estos factores son determinantes para obtener una fusión de imágenes precisa y estable dentro del contexto de visión por computador.
 
